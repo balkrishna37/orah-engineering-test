@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
-import {CreateGroupInput} from "../interface/group.interface";
+import {CreateGroupInput, UpdateGroupInput} from "../interface/group.interface";
+
 @Entity()
 export class Group {
   @PrimaryGeneratedColumn()
@@ -31,6 +32,14 @@ export class Group {
   student_count: number
 
   public prepareToCreate(input: CreateGroupInput) {
+    this.name= input.name,
+    this.number_of_weeks= input.number_of_weeks,
+    this.roll_states= input.roll_states,
+    this.incidents= input.incidents,
+    this.ltmt= input.ltmt
+  }
+
+  public prepareToUpdate(input: UpdateGroupInput) {
     this.name= input.name,
     this.number_of_weeks= input.number_of_weeks,
     this.roll_states= input.roll_states,

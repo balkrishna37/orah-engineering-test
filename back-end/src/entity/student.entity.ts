@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, OneToOne, ManyToOne } from "typeorm"
 import { CreateStudentInput, UpdateStudentInput } from "../interface/student.interface"
+import { StudentRollState } from "./student-roll-state.entity"
+import { GroupStudent } from "./group-student.entity"
 
 @Entity()
 export class Student {
@@ -14,6 +16,12 @@ export class Student {
 
   @Column()
   photo_url: string
+
+  @OneToMany(()=>StudentRollState,(rollState)=>rollState.student)
+  states: StudentRollState[]
+
+  @OneToMany(()=>GroupStudent,(groupStudent)=>groupStudent.student)
+  groupStudent: GroupStudent[]
 
   public prepareToCreate(input: CreateStudentInput) {
     this.first_name = input.last_name
